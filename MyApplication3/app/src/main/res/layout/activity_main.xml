@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        package="com.example.barcodescanner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Black"
+        tools:context=".MainActivity" android:id="@+id/drawerlayout" android:orientation="vertical">
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:fillViewport="true">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/Logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/Scan"
+                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Logo"
+                    app:layout_constraintStart_toEndOf="@+id/tabLayout" android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    app:srcCompat="@mipmap/ic_launcher_foreground"></ImageView>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:id="@+id/Scan"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/Speichern"
+                    android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+            />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_save"
+                    android:id="@+id/Speichern"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintTop_toBottomOf="@+id/Scan"
+                    app:layout_constraintBottom_toTopOf="@+id/Neuladen"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_popup_sync"
+                    android:id="@+id/Neuladen"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintTop_toBottomOf="@+id/Speichern"
+                    app:layout_constraintBottom_toTopOf="@+id/Filter"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/nestedScrollView"
+                    app:layout_constraintHorizontal_bias="0.5"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_dialog_dialer"
+                    android:id="@+id/Filter"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintTop_toBottomOf="@+id/Neuladen"
+                    app:layout_constraintBottom_toTopOf="@+id/Info"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_info_details"
+                    android:id="@+id/Info"
+                    app:backgroundTint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/Filter"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"/>
+            <SearchView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/Suchen" android:background="@drawable/cell_shape" android:queryHint="Name"
+                    app:layout_constraintTop_toBottomOf="@+id/Info"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="8dp">
+            </SearchView>
+            <androidx.core.widget.NestedScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" android:fillViewport="true"
+                    android:id="@+id/nestedScrollView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    app:layout_constraintTop_toTopOf="@+id/Scan"
+                    app:layout_constraintBottom_toBottomOf="@+id/Info"
+                    app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toStartOf="@+id/Neuladen"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                    app:layout_constraintHorizontal_bias="0.5">
+                <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:background="@color/Grau">
+                    <TableLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" android:id="@+id/Tablay"
+                            android:background="@color/Grau"
+                            android:stretchColumns="*" android:shrinkColumns="*"/>
+                </HorizontalScrollView>
+            </androidx.core.widget.NestedScrollView>
+            <com.google.android.material.tabs.TabLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/tabLayout"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/Logo"
+                    app:tabIndicatorColor="#009688"
+                    app:tabTextColor="@color/White" app:layout_constraintEnd_toEndOf="@+id/nestedScrollView"
+                    app:tabBackground="@color/colorAccent">
+
+                <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Simpel" android:id="@+id/Simpel"/>
+
+                <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Erweitert" android:id="@+id/Erweitert"/>
+
+            </com.google.android.material.tabs.TabLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+    <com.google.android.material.navigation.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_gravity="start">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <CheckBox
+                    android:text="Filtern"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/filtern"/>
+            <TextView
+                    android:text="Anzahlfilter:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/anzfil"/>
+            <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/Anzahlrat"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/Anzahlanzeige"/>
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
