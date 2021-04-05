@@ -20,6 +20,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,23 +77,26 @@ starteevents();
         Contentview.setMaxLines(1);
         Zeile.addView(Contentview);
     }
-    public void lesen()
-    {
+    public void lesen() {
+        int fehler = 0;
         try {
             File inputfile = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/lager.sort");
             FileInputStream input = new FileInputStream(inputfile);
-            InputStreamReader stream = new InputStreamReader(input);
+            InputStreamReader stream = new InputStreamReader(input, "utf8");
             BufferedReader reader = new BufferedReader(stream);
             String line;
-            while ((line = reader.readLine()) != null)
-            {
-                String[] Content = line.split(";");
-                Lebensmittel listitem = new Lebensmittel(Content[0],Content[1],Content[3], Integer.parseInt(Content[4]),Content[5],Content[6],Content[2],Content[7]);
-                Lebensmittelliste.add(listitem);
+            while ((line = reader.readLine()) != null) {
+                try {
+                    String[] Content = line.split(";");
+                    Lebensmittel listitem = new Lebensmittel(Content[0], Content[1], Content[3], Integer.parseInt(Content[4]), Content[5], Content[6], Content[2], Content[7]);
+                    Lebensmittelliste.add(listitem);
+                } catch (Exception e) {
+                    fehler++;
+                }
             }
-            Toast.makeText(getBaseContext(),"Willkommen in der Inventur App.", 5).show();
-        } catch (Exception e)
-        {
+            if(fehler > 0){Toast.makeText(getBaseContext(), "Es wurden ("+Lebensmittelliste.size()+")Produkte geladen"+"\nEs konnten ("+fehler+")Produkte nicht geladen werden.", 3).show();}else{Toast.makeText(getBaseContext(), "Es wurden "+Lebensmittelliste.size()+" Produkte geladen", 3).show();}
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), 3).show();
         }
     }
     public void Speichern()
@@ -101,7 +105,7 @@ starteevents();
         try {
             File Speichern = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/lager.sort");
             FileOutputStream stream = new FileOutputStream(Speichern);
-            OutputStreamWriter writer = new OutputStreamWriter(stream);
+            OutputStreamWriter writer = new OutputStreamWriter(stream, "utf8");
             for (Lebensmittel item:Lebensmittelliste) {
                 String Content = item.Bar+";"+item.Nam+";"+item.VPE+";"+item.Inh+";"+item.Anz+";"+item.Min+";"+item.Max+";"+item.Ene+";\n";
                 writer.write(Content);
