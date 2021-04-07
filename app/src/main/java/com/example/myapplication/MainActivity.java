@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +21,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +41,13 @@ starteevents();
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result.getContents() != null) {
             Lebensmittel Produkt = getLebensmittel(result.getContents());
-            produktdialog dialog = new produktdialog(Produkt);
-            dialog.show(getSupportFragmentManager(), "Produkt Interface");
+            opendialog(Produkt);
         }
+    }
+    public void opendialog(Lebensmittel Produkt)
+    {
+        produktdialog dialog = new produktdialog(Produkt);
+        dialog.show(getSupportFragmentManager(), "Produkt Interface");
     }
     public Lebensmittel getLebensmittel(String Barcode)
     {
@@ -64,17 +68,20 @@ starteevents();
             }
         return Produkt;
     }
-    public void addtolay(TableRow Zeile, String Content)
+
+    public void addtolay(TableRow Zeile, String Content, final Lebensmittel Dialogprodukt)
     {
         TextView Contentview = new TextView(this);
-        Drawable Cellshape = ContextCompat.getDrawable(this, R.drawable.cell_shape);
-        Contentview.setBackground(Cellshape);
         Contentview.setTextAppearance(R.style.TextAppearance_AppCompat_Body1);
         Contentview.setText(Content);
-        Contentview.setGravity(Gravity.CENTER);
         Contentview.setAutoSizeTextTypeUniformWithConfiguration(1, 100, 1, TypedValue.COMPLEX_UNIT_DIP);
         Contentview.setPadding(8,8,8,8);
-        Contentview.setMaxLines(1);
+        Contentview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                opendialog(Dialogprodukt);
+            }
+        });
         Zeile.addView(Contentview);
     }
     public void lesen() {
@@ -94,7 +101,7 @@ starteevents();
                     fehler++;
                 }
             }
-            if(fehler > 0){Toast.makeText(getBaseContext(), "Es wurden ("+Lebensmittelliste.size()+")Produkte geladen"+"\nEs konnten ("+fehler+")Produkte nicht geladen werden.", 3).show();}else{Toast.makeText(getBaseContext(), "Es wurden "+Lebensmittelliste.size()+" Produkte geladen", 3).show();}
+            if(fehler > 0){Toast.makeText(getBaseContext(), "Es wurden ("+Lebensmittelliste.size()+")Produkte geladen"+"\nEs konnten ("+fehler+")Produkte nicht geladen werden.", 3).show();}else{Toast.makeText(getBaseContext(), "Es wurden ("+Lebensmittelliste.size()+")Produkte geladen", 3).show();}
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), 3).show();
         }
@@ -122,24 +129,20 @@ public void refreshtable()
     SearchView suche = findViewById(R.id.Suchen);
     TableLayout layout = findViewById(R.id.Tablay);
     layout.removeAllViews();
-    TableRow Row = new TableRow(this);
-    addtolay(Row,"Barcode");addtolay(Row, "Name");addtolay(Row,"Anzahl");
-    if(Tabs.getSelectedTabPosition() == 1){addtolay(Row,"Inhalt");addtolay(Row,"Energie");addtolay(Row,"VPE");addtolay(Row, "MhdMin");addtolay(Row,"MhdMax");}
-    layout.addView(Row);
+    Drawable Cellshape = ContextCompat.getDrawable(this, R.drawable.cell_shape);
     for(Lebensmittel Lebensmitt:Lebensmittelliste) {
-
-        if (Lebensmitt.Nam.toLowerCase().contains(suche.getQuery().toString().toLowerCase()) && Filtern(Lebensmitt)) {
+if (Lebensmitt.Nam.toLowerCase().contains(suche.getQuery().toString().toLowerCase()) && Filtern(Lebensmitt)) {
                 TableRow zeile = new TableRow(this);
-                addtolay(zeile, Lebensmitt.Bar);
-                addtolay(zeile, Lebensmitt.Nam);
-                addtolay(zeile, String.valueOf(Lebensmitt.Anz));
-                if (Tabs.getSelectedTabPosition() == 1) {
-                    addtolay(zeile, Lebensmitt.Inh + "g");
-                    addtolay(zeile, Lebensmitt.Ene + "kcal/100g");
-                    addtolay(zeile, Lebensmitt.VPE);
-                    addtolay(zeile, Lebensmitt.Min);
-                    addtolay(zeile, Lebensmitt.Max);
-                }
+                zeile.setBackground(Cellshape);
+if(Tabs.getSelectedTabPosition() == 0){
+    addtolay(zeile, "Barcode:\nName:\nAnzahl:", Lebensmitt);
+    addtolay(zeile, Lebensmitt.Bar +"\n"+ Lebensmitt.Nam +"\n"+ Lebensmitt.Anz, Lebensmitt);
+}
+else
+    {
+        addtolay(zeile, "Barcode:\nName:\nAnzahl:\nInhalt:\nEnergie:\nVPE:\nMhdMin:\nMhdMax:", Lebensmitt);
+        addtolay(zeile, Lebensmitt.Bar +"\n"+ Lebensmitt.Nam +"\n"+ Lebensmitt.Anz + "\n"+ Lebensmitt.Inh + "g\n" + Lebensmitt.Ene+ "kcal/100g\n" + Lebensmitt.VPE + "\n"+ Lebensmitt.Min + "\n"+ Lebensmitt.Max, Lebensmitt);
+    }
                 layout.addView(zeile);
         }
     }
@@ -147,13 +150,14 @@ public void refreshtable()
 public boolean Filtern(Lebensmittel item){
         CheckBox Filteran = findViewById(R.id.filtern);
         SeekBar Anzahl = findViewById(R.id.Anzahlrat);
+        int Anz = item.Anz;
+        int pro = Anzahl.getProgress();
+        Boolean test = pro == Anz;
         if(Filteran.isChecked())
         {
-            if(Anzahl.getProgress() == item.Anz)
-            return true;
+            return test;
         }
         else{return true;}
-            return false;
 }
     @Override
     public void lebensmittelinterface(Lebensmittel Produkt) {
@@ -168,6 +172,8 @@ public boolean Filtern(Lebensmittel item){
 else {
     Lebensmittelliste.set(index, Produkt);
     } refreshtable();   }
+
+
     void starteevents() {
         FloatingActionButton Scan = findViewById(R.id.Scan);
         Scan.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +245,7 @@ else {
             public void onClick(View v) {
                 try {
                     PackageInfo information = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-                    Toast.makeText(getBaseContext(), "v." + information.versionName, 10).show();
+                    Toast.makeText(getBaseContext(), "v" + information.versionName, 10).show();
                 } catch (PackageManager.NameNotFoundException e) {
                 }
             }

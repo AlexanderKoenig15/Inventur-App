@@ -19,14 +19,14 @@
                     android:layout_height="0dp"
                     android:id="@+id/Logo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/Scan"
-                    app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="8dp" android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="Logo"
                     app:layout_constraintStart_toEndOf="@+id/tabLayout" android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    app:srcCompat="@mipmap/ic_launcher_foreground"></ImageView>
+                    app:srcCompat="@mipmap/ic_launcher_foreground" android:layout_marginBottom="8dp"></ImageView>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent" android:id="@+id/Tablay"
                             android:background="@color/Grau"
-                            android:stretchColumns="*" android:shrinkColumns="*"/>
+                            android:shrinkColumns="*" android:stretchColumns="*"/>
                 </HorizontalScrollView>
             </androidx.core.widget.NestedScrollView>
             <com.google.android.material.tabs.TabLayout
@@ -160,5 +160,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/Anzahlanzeige"/>
         </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+    <com.google.android.material.navigation.NavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:layout_gravity="end">
+        <TextView
+                android:text="noch in entwicklung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/textView"/>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
