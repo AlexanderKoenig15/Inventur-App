@@ -86,7 +86,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginBottom="8dp"
                     android:id="@+id/Suchen" android:background="@drawable/cell_shape" android:queryHint="Name"
-                    app:layout_constraintTop_toBottomOf="@+id/Info"
+                    app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
                     app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="8dp">
@@ -163,10 +163,41 @@
     </com.google.android.material.navigation.NavigationView>
     <com.google.android.material.navigation.NavigationView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_gravity="end">
-        <TextView
-                android:text="noch in entwicklung"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/textView"/>
+            android:layout_height="match_parent"
+            android:layout_gravity="end">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="64sp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                    android:id="@+id/horizontalScrollView">
+                <com.google.android.material.tabs.TabLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" app:tabBackground="@color/colorAccent"
+                        android:id="@+id/Onlinetab" app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1"
+                        app:tabMode="scrollable"/>
+            </HorizontalScrollView>
+            <Button
+                    android:text="Aktualisieren"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/Aktuell"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp" android:layout_marginBottom="8dp" android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+            <WebView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" app:layout_constraintBottom_toTopOf="@+id/Aktuell"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp" android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+                    android:layout_marginTop="8dp" android:id="@+id/barcodesuche"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

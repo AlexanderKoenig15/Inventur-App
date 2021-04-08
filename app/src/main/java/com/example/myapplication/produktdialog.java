@@ -29,14 +29,14 @@ public class produktdialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater =getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.produkt_dialog, null);
-        TextView barcodeview = (TextView) view.findViewById(R.id.Barcodefeld);
-        final EditText nameview = (EditText) view.findViewById(R.id.namefeld);
-        final EditText anzahlview = (EditText) view.findViewById(R.id.anzahlfeld);
-        final EditText Inhalt = (EditText) view.findViewById(R.id.inhaltfeld);
-        final EditText Energie = (EditText) view.findViewById(R.id.Energiefeld);
-        final EditText  VPE = (EditText) view.findViewById(R.id.vpefeld);
-        final EditText  MhdMin = (EditText) view.findViewById(R.id.mhdMinfeld);
-        final EditText  MhdMax = (EditText) view.findViewById(R.id.mhdMaxfeld);
+        final EditText barcodeview =view.findViewById(R.id.Barcodefeld);
+        final EditText nameview = view.findViewById(R.id.namefeld);
+        final EditText anzahlview = view.findViewById(R.id.anzahlfeld);
+        final EditText Inhalt = view.findViewById(R.id.inhaltfeld);
+        final EditText Energie = view.findViewById(R.id.Energiefeld);
+        final EditText  VPE = view.findViewById(R.id.vpefeld);
+        final EditText  MhdMin = view.findViewById(R.id.mhdMinfeld);
+        final EditText  MhdMax = view.findViewById(R.id.mhdMaxfeld);
         Energie.setText(Produkt.Ene);
         VPE.setText(Produkt.VPE);
         MhdMin.setText(Produkt.Min);
@@ -48,6 +48,7 @@ public class produktdialog extends AppCompatDialogFragment {
         builder.setView(view).setTitle("Produkt Interface").setPositiveButton("Bestätigen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Produkt.Bar = barcodeview.getText().toString();
                 Produkt.Nam = nameview.getText().toString();
                 Produkt.Anz = Integer.parseInt(anzahlview.getText().toString(), 10);
                 Produkt.Ene = Energie.getText().toString();

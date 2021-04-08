@@ -8,7 +8,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp" android:shrinkColumns="*" android:stretchColumns="*">
 
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
             <TextView
@@ -16,54 +16,59 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" android:id="@+id/Barcode"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"/>
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/Barcodefeld" android:hint="Barcode"/>
+                    android:hint="Barcode" android:id="@+id/Barcodefeld"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="Name:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/checkedTextView"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/namefeld" android:hint="Name"/>
+                    android:id="@+id/namefeld" android:hint="Name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="Anzahl:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/checkedTextView2"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/anzahlfeld" android:hint="Anzahl"/>
+                    android:id="@+id/anzahlfeld" android:hint="Anzahl"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="Inhalt:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/inhalt"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/inhaltfeld" android:hint="Inhalt"/>
+                    android:id="@+id/inhaltfeld" android:hint="Inhalt"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <TextView
                     android:text="g"
                     android:layout_width="wrap_content"
@@ -74,17 +79,19 @@
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="Energie:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/energie"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/Energiefeld" android:hint="Energie"/>
+                    android:id="@+id/Energiefeld" android:hint="Energie"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <TextView
                     android:text="kcal/100g"
                     android:layout_width="wrap_content"
@@ -95,47 +102,53 @@
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="VPE:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/VPE"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/vpefeld" android:hint="VPE"/>
+                    android:id="@+id/vpefeld" android:hint="VPE"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="MhdMin:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/mhdMin"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:ems="10"
-                    android:id="@+id/mhdMinfeld" android:hint="MhdMin"/>
+                    android:id="@+id/mhdMinfeld" android:hint="MhdMin"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <CheckedTextView
+            <TextView
                     android:text="Mhdmax:"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:id="@+id/mhdMax"
-                    android:gravity="center"/>
+                    android:gravity="right|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:ems="10"
-                    android:id="@+id/mhdMaxfeld" android:hint="MhdMax"/>
+                    android:id="@+id/mhdMaxfeld" android:hint="MhdMax"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
         </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

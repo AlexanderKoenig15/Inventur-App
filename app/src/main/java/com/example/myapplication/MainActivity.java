@@ -5,10 +5,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,7 +88,7 @@ starteevents();
         try {
             File inputfile = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/lager.sort");
             FileInputStream input = new FileInputStream(inputfile);
-            InputStreamReader stream = new InputStreamReader(input, "utf8");
+            InputStreamReader stream = new InputStreamReader(input);
             BufferedReader reader = new BufferedReader(stream);
             String line;
             while ((line = reader.readLine()) != null) {
@@ -112,7 +111,7 @@ starteevents();
         try {
             File Speichern = new File(this.getExternalFilesDir(null).getAbsolutePath() + "/lager.sort");
             FileOutputStream stream = new FileOutputStream(Speichern);
-            OutputStreamWriter writer = new OutputStreamWriter(stream, "utf8");
+            OutputStreamWriter writer = new OutputStreamWriter(stream);
             for (Lebensmittel item:Lebensmittelliste) {
                 String Content = item.Bar+";"+item.Nam+";"+item.VPE+";"+item.Inh+";"+item.Anz+";"+item.Min+";"+item.Max+";"+item.Ene+";\n";
                 writer.write(Content);
@@ -125,6 +124,7 @@ starteevents();
     }
 public void refreshtable()
 {
+    try{
     TabLayout Tabs = findViewById(R.id.tabLayout);
     SearchView suche = findViewById(R.id.Suchen);
     TableLayout layout = findViewById(R.id.Tablay);
@@ -146,18 +146,26 @@ else
                 layout.addView(zeile);
         }
     }
+    TabLayout OnSuche = findViewById(R.id.Onlinetab);
+    OnSuche.removeAllTabs();
+    for (Lebensmittel lm:Lebensmittelliste){
+        OnSuche.addTab(OnSuche.newTab().setText(lm.Bar));
+    }
+    }catch(Exception e)
+    {
+        Toast.makeText(getBaseContext(), e.getMessage(), 5).show();
+    }
 }
 public boolean Filtern(Lebensmittel item){
-        CheckBox Filteran = findViewById(R.id.filtern);
-        SeekBar Anzahl = findViewById(R.id.Anzahlrat);
-        int Anz = item.Anz;
-        int pro = Anzahl.getProgress();
-        Boolean test = pro == Anz;
-        if(Filteran.isChecked())
-        {
-            return test;
-        }
-        else{return true;}
+    CheckBox Filteran = findViewById(R.id.filtern);
+    SeekBar Anzahl = findViewById(R.id.Anzahlrat);
+    int Anz = item.Anz;
+    int pro = Anzahl.getProgress();
+    if (Filteran.isChecked()) {
+        return Anz == pro;
+    } else {
+        return true;
+    }
 }
     @Override
     public void lebensmittelinterface(Lebensmittel Produkt) {
@@ -245,8 +253,9 @@ else {
             public void onClick(View v) {
                 try {
                     PackageInfo information = getBaseContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-                    Toast.makeText(getBaseContext(), "v" + information.versionName, 10).show();
+                    Toast.makeText(getBaseContext(), "v" + information.versionName, 5).show();
                 } catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(getBaseContext(), "Es konnten keine Informationen gefunden werden.", 5).show();
                 }
             }
         });
@@ -292,5 +301,35 @@ else {
 
             }
         });
+        final TabLayout OnSuche = findViewById(R.id.Onlinetab);
+        OnSuche.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                String Barcode = Lebensmittelliste.get(tab.getPosition()).Bar;
+                findonline(Barcode);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        Button Aktuell = findViewById(R.id.Aktuell);
+        Aktuell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findonline(Lebensmittelliste.get(OnSuche.getSelectedTabPosition()).Bar);
+            }
+        });
+    }
+    void findonline(String barcode)
+    {
+        WebView Web = findViewById(R.id.barcodesuche);
+        Web.loadUrl("https://www.ean-suche.de/?q="+barcode);
     }
     }
